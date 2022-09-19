@@ -9,13 +9,11 @@ jobs:
       image: gradle:7.5.1-jdk8    
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - name: Setup Gradle Dependencies Cache
+        uses: actions/cache@v2
         with:
-           path: |
-             ~/.gradle/caches
-             ~/.gradle/wrapper
-           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-           restore-keys: ${{ runner.os }}-gradle-
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('**/*.gradle', '**/*.gradle.kts') }}
       - name: Build with Gradle
         run: ./gradlew build
        
